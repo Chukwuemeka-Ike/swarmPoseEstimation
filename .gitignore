@@ -30,3 +30,24 @@
 *.exe
 *.out
 *.app
+
+# Catkin & CMake build files and directories.
+build/
+install/
+devel/
+CMakeFiles/
+host/src/CMakeLists.txt
+
+CMakeCache.txt
+.catkin_workspace
+Makefile
+*.cmake
+
+# Images
+images/
+*.jpg
+*.avi
+
+# Compile folders.
+include/
+bin/

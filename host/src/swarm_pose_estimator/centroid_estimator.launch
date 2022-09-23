@@ -1,0 +1,23 @@
+<launch>
+    <arg 
+        name="swarm_size"
+        default="1"
+        doc="Number of Kheperas in the current swarm."
+    />
+    <!-- ROS Serial Server for Kheperas to connect to. -->
+    <node
+        name="serial_server"
+        pkg="rosserial_python"
+        type="serial_node.py"
+        args="tcp"
+    />
+
+    <!-- Centroid Estimator node that calculates swarm position. -->
+    <node
+        name="centroid_estimator"
+        pkg="swarm_pose_estimator"
+        type="centroid_estimator"
+        args="$(arg swarm_size)"
+        output="screen"
+    />
+</launch>
