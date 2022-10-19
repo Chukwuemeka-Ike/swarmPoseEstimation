@@ -9,10 +9,14 @@ set( CMAKE_CXX_COMPILER ${tools}/usr/local/khepera4-yocto/build/tmp/sysroots/i68
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set( OpenCV_DIR "~/kh4_dev/opencv/build" )
+set( OpenCV_DIR ~/kh4_dev/opencv/build )
+set( PACKAGE_INCLUDE_DIR ../include)
+
 find_package( OpenCV REQUIRED )
-include_directories(${OpenCV_INCLUDE_DIRS} "../include"  khepera )
+include_directories(${OpenCV_INCLUDE_DIRS} ${PACKAGE_INCLUDE_DIR}  khepera )
 add_compile_options(-std=c++11)
 
 add_executable( posePublisher posePublisher.cpp )
-target_link_libraries( posePublisher PUBLIC ${OpenCV_LIBS} )
+target_link_libraries( posePublisher PUBLIC ${OpenCV_LIBS} kheperaPoseEstimation )
+
+add_library( kheperaPoseEstimation ${PACKAGE_INCLUDE_DIR}/swarm_pose_estimation/kheperaPoseEstimation.cpp)
