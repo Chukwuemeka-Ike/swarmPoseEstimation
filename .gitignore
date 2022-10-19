@@ -51,3 +51,8 @@ images/
 # Compile folders.
 include/
 bin/
+*.bash
+!takeCalibrationImages.bash
+
+# 
+cameraData*
