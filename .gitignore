@@ -49,7 +49,8 @@ images/
 *.avi
 
 # Compile folders.
-include/
+/khepera/include/*
+!khepera/include/swarm_pose_estimation/
 bin/
 *.bash
 !takeCalibrationImages.bash
