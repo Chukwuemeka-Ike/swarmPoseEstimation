@@ -1,9 +1,11 @@
-/*  Node for calculating the swarm centroid as Kheperas publish their poses.
-
-    This spawns a node that subscribes to the khepera_pose topic and
-    calculates the swarm's centroid once it receives poses from every
-    robot in the swarm.
-*/
+/**
+ * @brief Calculates the Khepera swarm's centroid with complete information.
+ * 
+ * Spawns a node that subscribes to the khepera_pose topic and continuously
+ * calculates the swarm's centroid every time it receives poses from every
+ * robot in the swarm. It's useful for error-checking the estimation
+ * that the Kheperas are doing.
+ */
 #include <ros/ros.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <geometry_msgs/Point.h>
@@ -14,19 +16,21 @@
 
 using namespace std;
 
-/*
-    Class that takes care of subscribing to the khepera_pose topic, calculating
-    swarm centroid, and publishing the result on the swarm_centroid topic.
-*/
-class CentroidEstimator
+/**
+ * @brief Class that takes care of subscribing to the khepera_pose topic,
+ *        calculating the swarm's centroid, and publishing the result on the
+ *        true_centroid topic.
+ * 
+ */
+class CentroidCalculator
 {
 
-    public: CentroidEstimator(int swarm_size)
+    public: CentroidCalculator(int swarm_size)
     {
         // Create subscriber and publisher.
         sub_ = nh_.subscribe("khepera_pose", 1000,
-                &CentroidEstimator::poseReceived, this);
-        pub_ = nh_.advertise<geometry_msgs::Point>("swarm_centroid", 1000);
+                &CentroidCalculator::poseReceived, this);
+        pub_ = nh_.advertise<geometry_msgs::Point>("true_centroid", 1000);
 
         // Set swarm_size and initial centroid values.
         swarm_size_ = swarm_size;
@@ -37,10 +41,9 @@ class CentroidEstimator
 
     // Callback function for 
     void poseReceived(const geometry_msgs::TransformStamped& kheperaPose) {
-        ROS_DEBUG_ONCE("kheperaPose received.");
-
         // If received IP is not in set, add it and the bot's translation info.
         string ip = kheperaPose.child_frame_id;
+        ROS_INFO_STREAM("kheperaPose received from " << ip << ".");
         if (ip_addresses_.find(ip) == ip_addresses_.end()) {
             // Insert the ip address.
             ip_addresses_.insert(ip);
@@ -83,10 +86,10 @@ int main(int argc, char *argv[]) {
         << swarm_size << "." << endl;
 
     // Initialize ROS node.
-    ros::init(argc, argv, "centroid_estimator");
+    ros::init(argc, argv, "centroid_calculator");
 
     // Create centroid estimator object.
-    CentroidEstimator centroidEstimator(swarm_size);
+    CentroidCalculator centroidCalculator(swarm_size);
     ros::spin();
 
     return 0;

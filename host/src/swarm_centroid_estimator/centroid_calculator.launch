@@ -6,17 +6,23 @@
     />
     <!-- ROS Serial Server for Kheperas to connect to. -->
     <node
-        name="serial_server"
+        name="serial_server_1"
         pkg="rosserial_python"
         type="serial_node.py"
-        args="tcp"
+        args="tcp 11411"
+    />
+    <node
+        name="serial_server_2"
+        pkg="rosserial_python"
+        type="serial_node.py"
+        args="tcp 11412"
     />
 
-    <!-- Centroid Estimator node that calculates swarm position. -->
+    <!-- Centroid Calculator node that calculates swarm position. -->
     <node
-        name="centroid_estimator"
+        name="centroid_calculator"
         pkg="swarm_pose_estimator"
-        type="centroid_estimator"
+        type="centroid_calculator"
         args="$(arg swarm_size)"
         output="screen"
     />

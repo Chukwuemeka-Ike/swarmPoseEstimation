@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(swarm_pose_estimator)
+project(swarm_centroid_estimator)
 
 # Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -18,5 +18,5 @@ catkin_package(
    DEPENDS system_lib
 )
 
-add_executable( centroid_estimator centroid_estimator.cpp )
-target_link_libraries( centroid_estimator PUBLIC ${catkin_LIBRARIES} )
+add_executable( centroid_calculator centroid_calculator.cpp )
+target_link_libraries( centroid_calculator PUBLIC ${catkin_LIBRARIES} )

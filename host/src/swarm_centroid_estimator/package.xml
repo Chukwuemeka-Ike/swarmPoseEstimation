@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>swarm_pose_estimator</name>
+  <name>swarm_centroid_estimator</name>
   <version>0.0.0</version>
-  <description>The swarm_pose_estimator package is designed to aggregate pose information from multiple Khepera robots</description>
+  <description>The swarm_centroid_estimator package is designed to use information from multiple Khepera robots in estimating the swarm's center of mass.</description>
 
   <maintainer email="chukwuemeka.o.ike@gmail.com">Chukwuemeka "Mekahertz" Ike</maintainer>
   <license>MIT</license>
