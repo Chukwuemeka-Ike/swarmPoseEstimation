@@ -18,8 +18,8 @@
 using namespace std;
 using namespace cv;
 
-static knet_dev_t * dsPic; // robot pic microcontroller access
-static int quitReq = 0; // quit variable for loop
+static knet_dev_t * dsPic; // robot pic microcontroller access.
+static int quitReq = 0; // quit variable for loop.
 
 static void ctrlc_handler(int sig);
 void getCameraParams(Mat &cameraMatrix, Mat &distCoeffs, string camera_params_file);
@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
 
   bool tagsPresent;
 
-  /* Set the libkhepera debug level - Highly recommended for development. */
+  // Set the libkhepera debug level - Highly recommended for development.
   kb_set_debug_level(2);
 
   // File names and camera capture command.
