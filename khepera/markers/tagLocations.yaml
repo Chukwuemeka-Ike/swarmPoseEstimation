@@ -1,0 +1,22 @@
+%YAML:1.0
+numTags: 3
+tagNames:
+  - tag0
+  - tag1
+  - tag2
+tagLocations:
+  tag0: !!opencv-matrix
+    rows: 4
+    cols: 4
+    dt: d
+    data: [ 1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 1. ]
+  tag1: !!opencv-matrix
+    rows: 4
+    cols: 4
+    dt: d
+    data: [ 1., 0., 0.3, -0.2, 0., 1., 0.1, 0.3, 0., 0., 1., -0.4, 0., 0., 0., 1. ]
+  tag2: !!opencv-matrix
+    rows: 4
+    cols: 4
+    dt: d
+    data: [ 1., 0., 0.5, 5.2, 0., 1., 0.1, 0.3, 0., 0., 2., 10.4, 0., 0., 0., 1. ]
