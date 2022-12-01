@@ -123,9 +123,10 @@ void estimateKheperaPose(
     int i = 0;
     drawFrameAxes(outputImage, cameraMatrix, distCoeffs, rvecs[i], tvecs[i], 0.1);
 
-    cout << "Marker " << markerIds[i] << ": " << endl;
-    cout << "    Rotation: " << rvecs[i] << endl;
-    cout << "    Translation: " << tvecs[i] << endl << endl;
+    // Uncomment for debugging.
+    // cout << "Marker " << markerIds[i] << ": " << endl;
+    // cout << "    Rotation: " << rvecs[i] << endl;
+    // cout << "    Translation: " << tvecs[i] << endl << endl;
 
     // Convert the rotation vector into a rotation matrix.
     cv::Rodrigues(rvecs[i], rotMatrix);
@@ -137,15 +138,22 @@ void estimateKheperaPose(
     vconcat(intermediate, padding, transCamToTag);
     transCamToWorld = tagLocations[markerIds[i]]*transCamToTag;
 
-    cout << "transCamToWorld: " << transCamToWorld << endl;
+    // Uncomment for debugging.
+    // cout << "transCamToWorld: " << transCamToWorld << endl;
 
     // Update my pose information.
     my_pose.transform.translation.x = transCamToWorld.at<float>(0,3);
     my_pose.transform.translation.y = transCamToWorld.at<float>(1,3);
     my_pose.transform.translation.z = transCamToWorld.at<float>(2,3);
 
+    // Print out the robot's position.
+    cout << "My position: \n";
+    cout << "x: " << my_pose.transform.translation.x << endl;
+    cout << "y: " << my_pose.transform.translation.y << endl;
+    cout << "z: " << my_pose.transform.translation.z << endl << endl;
+
     // Save the output image. Uncomment this for debugging.
-    imwrite(output_image_file, outputImage);
+    // imwrite(output_image_file, outputImage);
   }
   else {
     cout << "No Markers Detected!\n";
