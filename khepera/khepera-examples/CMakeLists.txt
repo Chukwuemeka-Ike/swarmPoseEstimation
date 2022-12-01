@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 2.8 )
 
-project( pose_publisher )
+project( khepera_examples )
 
 set( CMAKE_SYSTEM_NAME Linux )
 set( CMAKE_SYSTEM_PROCESSOR arm )

@@ -1,0 +1,35 @@
+<launch>
+    <!-- Create 3 publishers with sequential names. -->
+    <node
+        name="average_publisher_1"
+        pkg="ros_examples"
+        type="average_publisher"
+    />
+    <node
+        name="average_publisher_2"
+        pkg="ros_examples"
+        type="average_publisher"
+    />
+    <node
+        name="average_publisher_3"
+        pkg="ros_examples"
+        type="average_publisher"
+    />
+
+    <!-- Create 3 subscribers with sequential names. -->
+    <node
+        name="average_subscriber_1"
+        pkg="ros_examples"
+        type="average_subscriber"
+    />
+    <node
+        name="average_subscriber_2"
+        pkg="ros_examples"
+        type="average_subscriber"
+    />
+    <node
+        name="average_subscriber_3"
+        pkg="ros_examples"
+        type="average_subscriber"
+    />
+</launch>
