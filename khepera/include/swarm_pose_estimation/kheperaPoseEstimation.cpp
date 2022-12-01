@@ -58,7 +58,7 @@ void getTagLocations(map<int, Mat> &tagLocations, string tagLocationsFile)
 }
 
 /**
- * @brief Get the Camera parameters from the XML file.
+ * @brief Get the camera parameters from the camera data file.
  * 
  * @param cameraMatrix 
  * @param distCoeffs 

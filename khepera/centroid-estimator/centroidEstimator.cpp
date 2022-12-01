@@ -1,5 +1,5 @@
 /**
- * @brief Estimates the swarm centroid based on its position and the group estimate.
+ * Estimates the swarm centroid based on its position and the group estimate.
  * 
  * Each Khepera maintains its own estimate of the swarm's centroid, and
  * continuously updates it with its neighbors' estimates. The goal is that
@@ -22,8 +22,17 @@
 using namespace std;
 using namespace cv;
 
-#define SELF_WEIGHT 0.5
-#define TEAM_WEIGHT 0.3
+// Weights that reflect the level of trust the Khepera should give to its
+// neighbors estimates vs its own.
+// SELF_WEIGHT + NEIGHBOR_WEIGHT = 1 must be true for convergence.
+#define SELF_WEIGHT 0.6
+#define NEIGHBOR_WEIGHT 0.4
+
+// Weights that affect how quickly the Khepera's estimate should return to
+// its pose if neighbors stop publishing estimates.
+// HOLD_WEIGHT + RETURN_WEIGHT = 1 must be true for convergence.
+#define HOLD_WEIGHT 0.5
+#define RETURN_WEIGHT 0.5
 
 geometry_msgs::TransformStamped my_estimate;
 ros::Publisher estimatePublisher("centroid_estimate", &my_estimate);
@@ -38,9 +47,9 @@ string my_ip;
 void updateAndPublishEstimate(const geometry_msgs::TransformStamped& receivedEstimate) 
 {
   if (receivedEstimate.child_frame_id != my_ip && numIPs == 0) {
-    my_estimate.transform.translation.x = float(SELF_WEIGHT*my_estimate.transform.translation.x) + float(TEAM_WEIGHT*receivedEstimate.transform.translation.x);
-    my_estimate.transform.translation.y = float(SELF_WEIGHT*my_estimate.transform.translation.y) + float(TEAM_WEIGHT*receivedEstimate.transform.translation.y);
-    my_estimate.transform.translation.z = float(SELF_WEIGHT*my_estimate.transform.translation.z) + float(TEAM_WEIGHT*receivedEstimate.transform.translation.z);
+    my_estimate.transform.translation.x = float(SELF_WEIGHT*my_estimate.transform.translation.x) + float(NEIGHBOR_WEIGHT*receivedEstimate.transform.translation.x);
+    my_estimate.transform.translation.y = float(SELF_WEIGHT*my_estimate.transform.translation.y) + float(NEIGHBOR_WEIGHT*receivedEstimate.transform.translation.y);
+    my_estimate.transform.translation.z = float(SELF_WEIGHT*my_estimate.transform.translation.z) + float(NEIGHBOR_WEIGHT*receivedEstimate.transform.translation.z);
     estimatePublisher.publish(&my_estimate);
     numIPs = 1;
   }
@@ -123,10 +132,10 @@ int main(int argc, char *argv[])
       markerCorners, rejectedCandidates, tagLocations, my_pose,
       output_image_file
     );
-
-    my_estimate.transform.translation.x = float(my_estimate.transform.translation.x + my_pose.transform.translation.x) / 2;
-    my_estimate.transform.translation.y = float(my_estimate.transform.translation.y + my_pose.transform.translation.y) / 2;
-    my_estimate.transform.translation.z = float(my_estimate.transform.translation.z + my_pose.transform.translation.z) / 2;
+    
+    my_estimate.transform.translation.x = float(HOLD_WEIGHT*my_estimate.transform.translation.x + RETURN_WEIGHT*my_pose.transform.translation.x);
+    my_estimate.transform.translation.y = float(HOLD_WEIGHT*my_estimate.transform.translation.y + RETURN_WEIGHT*my_pose.transform.translation.y);
+    my_estimate.transform.translation.z = float(HOLD_WEIGHT*my_estimate.transform.translation.z + RETURN_WEIGHT*my_pose.transform.translation.z);
 
     // Publish the updated pose.
     posePublisher.publish(&my_pose);

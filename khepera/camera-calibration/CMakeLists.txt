@@ -4,8 +4,11 @@ project( camera_calibration )
 
 set( CMAKE_SYSTEM_NAME Linux )
 set( CMAKE_SYSTEM_PROCESSOR arm )
-set( CMAKE_C_COMPILER ${tools}/usr/local/khepera4-yocto/build/tmp/sysroots/i686-linux/usr/bin/armv7a-vfp-neon-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc )
-set( CMAKE_CXX_COMPILER ${tools}/usr/local/khepera4-yocto/build/tmp/sysroots/i686-linux/usr/bin/armv7a-vfp-neon-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ )
+# set( CMAKE_C_COMPILER ${tools}/usr/local/khepera4-yocto/build/tmp/sysroots/i686-linux/usr/bin/armv7a-vfp-neon-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc )
+# set( CMAKE_CXX_COMPILER ${tools}/usr/local/khepera4-yocto/build/tmp/sysroots/i686-linux/usr/bin/armv7a-vfp-neon-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ )
+
+set( CMAKE_C_COMPILER ${tools}$ENV{K4_YOCTO}/armv7a-vfp-neon-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc )
+set( CMAKE_CXX_COMPILER ${tools}$ENV{K4_YOCTO}/armv7a-vfp-neon-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 

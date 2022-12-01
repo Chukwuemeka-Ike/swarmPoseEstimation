@@ -21,7 +21,7 @@
     <!-- Centroid Calculator node that calculates swarm position. -->
     <node
         name="centroid_calculator"
-        pkg="swarm_pose_estimator"
+        pkg="swarm_centroid_estimator"
         type="centroid_calculator"
         args="$(arg swarm_size)"
         output="screen"
